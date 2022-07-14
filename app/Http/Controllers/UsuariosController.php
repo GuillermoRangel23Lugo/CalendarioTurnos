@@ -7,6 +7,7 @@ use Hash;
 use Session;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class UsuariosController extends Controller
 {
@@ -31,6 +32,30 @@ class UsuariosController extends Controller
      */
     public function index()
     {
-        return view('usuarios');
+        $usuarios = DB::table('users')->get();
+        return view('usuarios', ['usuarios' => $usuarios]);
+    }
+    
+    public function crearUsuario(){
+        $request->validate([
+            'nombre' => 'required',
+            'apellido' => 'required',
+            'documento' => 'required',
+            'fecha_nacimiento' => 'required',
+            'nivel' => 'required',
+            'email' => 'required|email|unique:users',
+            'password' => 'required|min:6',
+        ]);
+           
+        $data = $request->all();
+        User::create([
+            'nombre' => $data['nombre'],
+            'apellido' => $data['apellido'],
+            'documento' => $data['documento'],
+            'fecha_nacimiento' => $data['fecha_nacimiento'],
+            'nivel' => $data['nivel'],
+            'email' => $data['email'],
+            'password' => Hash::make($data['password'])
+        ]);
     }
 }

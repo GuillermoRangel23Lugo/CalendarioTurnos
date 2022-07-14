@@ -16,4 +16,5 @@ Route::get('signout', [CustomAuthController::class, 'signOut'])->name('signout')
 
 
 Route::get('usuarios', 'App\Http\Controllers\UsuariosController@index')->name('usuarios');
+Route::post('crear-usuario', 'App\Http\Controllers\UsuariosController@crearUsuario')->name('crear.usuario');
 Route::get('calendario', 'App\Http\Controllers\CalendarioController@index')->name('calendario');
