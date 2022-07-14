@@ -7,6 +7,7 @@
     <title>Document</title>
     <link href="{{asset('bootstrap/bootstrap.min.css')}}" rel="stylesheet">
     <link rel="stylesheet" href="//use.fontawesome.com/releases/v5.0.12/css/all.css" integrity="sha384-G0fIWCsCzJIMAVNQPfjH08cyYaUtMwjJwqiRKxxE/rx96Uroj1BtIQ6MLJuheaO9" crossorigin="anonymous">
+    <link rel="stylesheet" href="//cdn.datatables.net/1.12.1/css/jquery.dataTables.min.css">
 </head>
 <body>
     @guest
