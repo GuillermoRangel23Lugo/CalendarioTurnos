@@ -5,6 +5,7 @@ use Hash;
 use Session;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\DB;
 
 class CustomAuthController extends Controller{
 
@@ -18,12 +19,21 @@ class CustomAuthController extends Controller{
             'password' => 'required',
         ]);
    
+        $data = $request->all();
+        $usuario = DB::table('users')
+        ->where('email', '=', $data['email'])
+        ->first();
+
+        if($usuario->status == 0){
+            return redirect("login")->withSuccess('Usuario Deshabilitado');
+        }
+
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials)) {
-            return redirect()->intended('dashboard')->withSuccess('Signed in');
+            return redirect()->intended('usuarios')->withSuccess('Logueado');
         }
   
-        return redirect("login")->withSuccess('Login details are not valid');
+        return redirect("login")->withSuccess('Login no es valido');
     }
 
     public function registration()
