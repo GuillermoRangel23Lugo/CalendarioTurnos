@@ -2,7 +2,7 @@
 <div class="container">
     <h4 class="mb-4">Listado de Usuarios</h4>
     <div class="table-responsive">
-        <table class="table table-hover table-striped table-bordered">
+        <table class="table table-hover table-striped table-bordered datatable">
             <thead>
                 <tr>
                     <th scope="col">#</th>
@@ -43,7 +43,7 @@
     </div>
 </div>
 <!-- Modal -->
-<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="registrar_usuario" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
@@ -73,7 +73,7 @@
                     </div>
                     <div class="form-group">
                         <label>Fecha de Nacimiento</label>
-                        <input type="text" name="fecha_nacimiento" required class="form-control">
+                        <input type="text" name="fecha_nacimiento" required class="form-control datepicker">
                     </div>
                     <div class="form-group">
                         <label>Nivel</label>
