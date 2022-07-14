@@ -20,7 +20,7 @@ class UsuariosController extends Controller
     {
         $this->middleware('auth');
         if(!Auth::check()){
-            return redirect("login")->withSuccess('You are not allowed to access');
+            return redirect("login")->with('message', 'You are not allowed to access');
         }
   
     }
@@ -57,20 +57,54 @@ class UsuariosController extends Controller
             'email' => $data['email'],
             'password' => Hash::make($data['password'])
         ]);
-        return redirect("usuarios")->withSuccess('Usuario registrado.');
+        return redirect("usuarios")->with('message', 'Usuario registrado.');
     }
     
     public function habilitarUsuario(Request $request, $id){
         DB::table('users')
                 ->where('id', $id)
                 ->update(['status' => 1]);
-        return redirect("usuarios")->withSuccess('Usuario habilitado.');
+        return redirect("usuarios")->with('message', 'Usuario habilitado.');
     }
     
     public function deshabilitarUsuario(Request $request, $id){
         DB::table('users')
                 ->where('id', $id)
                 ->update(['status' => 0]);
-        return redirect("usuarios")->withSuccess('Usuario deshabilitado.');
+        return redirect("usuarios")->with('message', 'Usuario deshabilitado.');
+    }
+    
+    public function editarUsuario(Request $request, $id){
+        $request->validate([
+            'nombre' => 'required',
+            'apellido' => 'required',
+            'documento' => 'required',
+            'fecha_nacimiento' => 'required',
+            'nivel' => 'required',
+            'email' => 'required|email',
+        ]);
+           
+        $data = $request->all();
+
+        DB::table('users')
+                ->where('id', $id)
+                ->update([
+                    'nombre' => $data['nombre'],
+                    'apellido' => $data['apellido'],
+                    'documento' => $data['documento'],
+                    'email' => $data['email'],
+                    'password' => Hash::make($data['password']),
+                    'email' => $data['email'],
+                    'nivel' => $data['nivel'],
+                    'fecha_nacimiento' => date('Y-m-d', strtotime($data['fecha_nacimiento'])),
+                ]);
+        return redirect("usuarios")->with('message', 'Usuario editado.');
+    }
+
+    public function eliminarUsuario(Request $request, $id){
+        $usuario = DB::table('users')
+        ->where('id', $id)
+        ->delete();
+        return redirect("usuarios")->with('message', 'Usuario eliminado.');
     }
 }

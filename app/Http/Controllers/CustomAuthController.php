@@ -25,15 +25,15 @@ class CustomAuthController extends Controller{
         ->first();
 
         if($usuario->status == 0){
-            return redirect("login")->withSuccess('Usuario Deshabilitado');
+            return redirect("login")->withError('Usuario Deshabilitado');
         }
 
         $credentials = $request->only('email', 'password');
         if (Auth::attempt($credentials)) {
-            return redirect()->intended('usuarios')->withSuccess('Logueado');
+            return redirect()->intended('usuarios')->with('message', 'Logueado');
         }
   
-        return redirect("login")->withSuccess('Login no es valido');
+        return redirect("login")->withError('Login no es valido');
     }
 
     public function registration()
@@ -52,7 +52,7 @@ class CustomAuthController extends Controller{
         $data = $request->all();
         $check = $this->create($data);
          
-        return redirect("dashboard")->withSuccess('You have signed-in');
+        return redirect("dashboard")->with('message', 'You have signed-in');
     }
 
     public function create(array $data)
@@ -70,7 +70,7 @@ class CustomAuthController extends Controller{
             return view('dashboard');
         }
   
-        return redirect("login")->withSuccess('You are not allowed to access');
+        return redirect("login")->with('message', 'You are not allowed to access');
     }
     
     public function signOut() {

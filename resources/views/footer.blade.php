@@ -9,6 +9,27 @@
                 responsive: true
             });
             $('.datepicker').datepicker({});
+            $('html').on('click', '.editar_usuario', function(evt){
+                var nombre = $(this).data('nombre');
+                var apellido = $(this).data('apellido');
+                var documento = $(this).data('documento');
+                var email = $(this).data('email');
+                var email = $(this).data('email');
+                var nivel = $(this).data('nivel');
+                var fecha_nacimiento = $(this).data('fecha_nacimiento');
+                var url = $(this).data('url');
+
+                $('#nombre').val(nombre);
+                $('#apellido').val(apellido);
+                $('#documento').val(documento);
+                $('#email').val(email);
+                $('#email').val(email);
+                $('#nivel').val(nivel);
+                $('#fecha_nacimiento').val(fecha_nacimiento);
+                $('#form_editar_usuario').attr('action', url);
+
+                $('#editar_usuario').modal('show');
+            });
         } );
     </script>
 </body>
