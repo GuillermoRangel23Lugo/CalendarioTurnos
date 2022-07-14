@@ -1,6 +1,9 @@
 @include('header')
 <div class="container">
-    <h4 class="mb-4">Listado de Usuarios</h4>
+    <h4 class="mb-4">
+        Listado de Usuarios
+        <button class="btn btn-sm btn-success float-right" data-toggle="modal" data-target="#registrar_usuario">Registrar Usuario</button>
+    </h4>
     <div class="table-responsive">
         <table class="table table-hover table-striped table-bordered datatable">
             <thead>
@@ -32,8 +35,13 @@
                             @endif
                         </td>
                         <td>
-                            <a href="#a" class="btn btn-sm btn-warning" data-toggle="tooltip" data-placement="top" title="Deshabilitar Usuario"><i class="fas fa-times"></i></a>
-                            <a href="#a" class="btn btn-sm btn-success" data-toggle="tooltip" data-placement="top" title="Habilitar Usuario"><i class="fas fa-check"></i></a>
+                            @if ($data->status == 1)
+                                <a href="{{ route('deshabilitar.usuario', $data->id) }}" class="btn btn-sm btn-warning" data-toggle="tooltip" data-placement="top" title="Deshabilitar Usuario"><i class="fas fa-times"></i></a>
+                            @else
+                                <a href="{{ route('habilitar.usuario', $data->id) }}" class="btn btn-sm btn-success" data-toggle="tooltip" data-placement="top" title="Habilitar Usuario"><i class="fas fa-check"></i></a>
+                            @endif
+                            
+                            
                             <a href="#a" class="btn btn-sm btn-danger" data-toggle="tooltip" data-placement="top" title="Elimimnar Usuario"><i class="fas fa-trash"></i></a>
                         </td>
                     </tr>
@@ -52,8 +60,8 @@
                   <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <div class="modal-body">
-                <form action="{{ route('crear.usuario') }}" method="post">
+            <form action="{{ route('crear.usuario') }}" method="post">
+                <div class="modal-body">
                     @csrf
                     <div class="form-group">
                         <label>Nombre</label>
@@ -83,12 +91,16 @@
                             <option value="Ingeniero">Ingeniero</option>
                         </select>
                     </div>
-                </form>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                <button type="button" class="btn btn-primary">Save changes</button>
-            </div>
+                    <div class="form-group">
+                        <label>Clave</label>
+                        <input type="password" name="password" required class="form-control">
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+                    <button type="submit" class="btn btn-primary">Guardar</button>
+                </div>
+            </form>
         </div>
     </div>
 </div>

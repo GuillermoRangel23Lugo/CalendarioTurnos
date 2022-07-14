@@ -9,7 +9,6 @@
                 responsive: true
             });
             $('.datepicker').datepicker({});
-            $('#registrar_usuario').modal('show');
         } );
     </script>
 </body>

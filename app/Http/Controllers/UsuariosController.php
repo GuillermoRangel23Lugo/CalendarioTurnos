@@ -36,7 +36,7 @@ class UsuariosController extends Controller
         return view('usuarios', ['usuarios' => $usuarios]);
     }
     
-    public function crearUsuario(){
+    public function crearUsuario(Request $request){
         $request->validate([
             'nombre' => 'required',
             'apellido' => 'required',
@@ -52,10 +52,25 @@ class UsuariosController extends Controller
             'nombre' => $data['nombre'],
             'apellido' => $data['apellido'],
             'documento' => $data['documento'],
-            'fecha_nacimiento' => $data['fecha_nacimiento'],
+            'fecha_nacimiento' => date('Y-m-d', strtotime($data['fecha_nacimiento'])),
             'nivel' => $data['nivel'],
             'email' => $data['email'],
             'password' => Hash::make($data['password'])
         ]);
+        return redirect("usuarios")->withSuccess('Usuario registrado.');
+    }
+    
+    public function habilitarUsuario(Request $request, $id){
+        DB::table('users')
+                ->where('id', $id)
+                ->update(['status' => 1]);
+        return redirect("usuarios")->withSuccess('Usuario habilitado.');
+    }
+    
+    public function deshabilitarUsuario(Request $request, $id){
+        DB::table('users')
+                ->where('id', $id)
+                ->update(['status' => 0]);
+        return redirect("usuarios")->withSuccess('Usuario deshabilitado.');
     }
 }
