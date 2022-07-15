@@ -35,6 +35,11 @@ class ServiciosController extends Controller
      */
     public function index()
     {
+        $id = Auth::user()->id;
+        $this->user_data = DB::table('users')->where('id', $id)->first();
+        if($this->user_data->nivel == 'Ingeniero'){
+            return redirect()->route("turnos")->with('message', 'No tienes acceso');
+        }
         $this->servicio = new Servicio();
         $servicios = $this->servicio->get_all();
         return view('servicios', ['servicios' => $servicios]);

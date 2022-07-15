@@ -28,6 +28,11 @@ class UsuariosController extends Controller
      */
     public function index()
     {
+        $id = Auth::user()->id;
+        $this->user_data = DB::table('users')->where('id', $id)->first();
+        if($this->user_data->nivel == 'Ingeniero'){
+            return redirect()->route("turnos")->with('message', 'No tienes acceso');
+        }
         $usuarios = DB::table('users')->get();
         return view('usuarios', ['usuarios' => $usuarios]);
     }

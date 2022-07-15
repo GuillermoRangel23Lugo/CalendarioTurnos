@@ -35,6 +35,12 @@ class TurnosController extends Controller
      */
     public function index(Request $request, $id_servicio)
     {
+        $id = Auth::user()->id;
+        $this->user_data = DB::table('users')->where('id', $id)->first();
+        if($this->user_data->nivel == 'Ingeniero'){
+            return redirect()->route("turnos")->with('message', 'No tienes acceso');
+        }
+
         $this->turno = new Turno();
         $this->servicio = new Servicio();
         $servicio = $this->servicio->get_by_id($id_servicio);
@@ -68,17 +74,27 @@ class TurnosController extends Controller
 
         $dias_semana = [0 => 'Domingo', 1 => 'Lunes', 2 => 'Martes', 3 => 'Miercoles', 4 => 'Jueves', 5 => 'Viernes', 6 => 'Sabado'];
 
-        return view('turnosView', ['servicios' => $servicios, 'user_data' => $this->user_data, 'servicio' => $servicio, 'turnos' => $turnos, 'semana' => $semana, 'dias_turnos' => $dias_turnos, 'dias_semana' => $dias_semana]);
+        return view('turnosView', ['servicios' => $servicios, 'user_data' => $this->user_data, 'servicio' => $servicio, 'id_servicio' => $id_servicio, 'turnos' => $turnos, 'semana' => $semana, 'dias_turnos' => $dias_turnos, 'dias_semana' => $dias_semana]);
     }
 
     public function obtenerTurnos(Request $request, $id_servicio, $semana){
+        $this->turno = new Turno();
         $data = $request->all();
+        $message = 'Turno obtenidos.';
         foreach($data['turnos_seleccionados'] as $turno){
-            $this->turno->actualizar([
-                'id_usuario' => Auth::user()->id,
-            ], $turno->id);
+            $turno_data = $this->turno->get_by_id($turno);
+            if($turno_data){
+                if($turno_data->id_usuario != 0){
+                    $message = 'Uno o mas de los turnos seleccionados ya estaban asignados, solo se te asignaron los turnos disponibles.';
+                }
+                else{
+                    $this->turno->actualizar([
+                        'id_usuario' => Auth::user()->id,
+                    ], $turno);
+                }
+            }
         }
-        return redirect()->route("turnos.servicio", ['id_servicio' => $id_servicio, 'semana' => $semana])->with('message', 'Turno obtenidos.');
+        return redirect()->route("servicio.turnos.semana", ['id_servicio' => $id_servicio, 'semana' => $semana])->with('message', $message);
     }
     
     public function crearTurno(Request $request, $id_servicio){
