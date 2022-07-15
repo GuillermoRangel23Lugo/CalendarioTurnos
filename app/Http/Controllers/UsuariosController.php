@@ -52,6 +52,7 @@ class UsuariosController extends Controller
                 'fecha_nacimiento' => date('Y-m-d', strtotime(str_replace('/', '-', $data['fecha']))),
                 'nivel' => $data['nivel'],
                 'email' => $data['email'],
+                'color' => $data['color'],
                 'password' => Hash::make($data['password'])
             ];
         }
@@ -63,6 +64,7 @@ class UsuariosController extends Controller
                 'fecha_nacimiento' => date('Y-m-d', strtotime(str_replace('/', '-', $data['fecha']))),
                 'nivel' => $data['nivel'],
                 'email' => $data['email'],
+                'color' => $data['color'],
             ];
         }
         User::create();
@@ -105,6 +107,7 @@ class UsuariosController extends Controller
                     'password' => Hash::make($data['password']),
                     'email' => $data['email'],
                     'nivel' => $data['nivel'],
+                    'color' => $data['color'],
                     'fecha_nacimiento' => date('Y-m-d', strtotime($data['fecha_nacimiento'])),
                 ]);
         return redirect("usuarios")->with('message', 'Usuario editado.');
