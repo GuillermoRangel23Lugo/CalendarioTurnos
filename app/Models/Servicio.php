@@ -19,6 +19,11 @@ class Servicio extends Model
         return $servicios;
     }
 
+    public function get_all_hab(){
+        $servicios = DB::table($this->table)->where('status', 1)->get();
+        return $servicios;
+    }
+    
     public function get_by_id($id){
         $servicio = DB::table($this->table)->where('id', $id)->first();
         return $servicio;
