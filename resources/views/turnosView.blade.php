@@ -87,13 +87,15 @@
                 </div>
             @endforeach
         </div>
-        <br><br>
-        <div class="row">
-            <div class="col-12 text-center">
-                <button class="btn btn-success" type="submit">Obtener Turnos</button>
+        @if($id_servicio != 0 && $semana != 0)
+            <br><br>
+            <div class="row">
+                <div class="col-12 text-center">
+                    <button class="btn btn-success" type="submit">Obtener Turnos</button>
+                </div>
             </div>
-        </div>
-        <br><br><br>
+            <br><br><br>
+        @endif
     </form>
 </div>
 @include('footer')
