@@ -102,19 +102,32 @@ class UsuariosController extends Controller
            
         $data = $request->all();
 
+        if(isset($data['password']) && !empty($data['password'])){
+            $data_update = [
+                'nombre' => $data['nombre'],
+                'apellido' => $data['apellido'],
+                'documento' => $data['documento'],
+                'fecha_nacimiento' => date('Y-m-d', strtotime(str_replace('/', '-', $data['fecha']))),
+                'nivel' => $data['nivel'],
+                'email' => $data['email'],
+                'color' => $data['color'],
+                'password' => Hash::make($data['password'])
+            ];
+        }
+        else{
+            $data_update = [
+                'nombre' => $data['nombre'],
+                'apellido' => $data['apellido'],
+                'documento' => $data['documento'],
+                'fecha_nacimiento' => date('Y-m-d', strtotime(str_replace('/', '-', $data['fecha']))),
+                'nivel' => $data['nivel'],
+                'email' => $data['email'],
+                'color' => $data['color'],
+            ];
+        }
         DB::table('users')
                 ->where('id', $id)
-                ->update([
-                    'nombre' => $data['nombre'],
-                    'apellido' => $data['apellido'],
-                    'documento' => $data['documento'],
-                    'email' => $data['email'],
-                    'password' => Hash::make($data['password']),
-                    'email' => $data['email'],
-                    'nivel' => $data['nivel'],
-                    'color' => $data['color'],
-                    'fecha_nacimiento' => date('Y-m-d', strtotime($data['fecha_nacimiento'])),
-                ]);
+                ->update($data_update);
         return redirect("usuarios")->with('message', 'Usuario editado.');
     }
 
