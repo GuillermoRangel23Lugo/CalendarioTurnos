@@ -10,7 +10,7 @@
         </button>
         <div class="dropdown-menu">
             @foreach($servicios as $servicio_data)
-                <a class="dropdown-item" href="{{ route('servicio.turnos', $servicio_data->id) }}">{{ $servicio_data->servicio }}</a>
+                <a class="dropdown-item" href="{{ route('servicio.turnos.semana', ['id_servicio' => $servicio->id, 'semana' => date('W')) }}">{{ $servicio_data->servicio }}</a>
             @endforeach
         </div>
     </div>
@@ -34,8 +34,10 @@
         <h5>Semana: {{ (!empty($semana)) ? $semana.' del '.date('Y') : 'No seleccionada' }}</h5>
         
     @endif
-    <h5>Turnos: </h5>
-    <br>
+    @if($id_servicio != 0 && $semana != 0)
+        <h5>Turnos: </h5>
+        <br>
+    @endif
     <form action="{{ route('obtener.turnos', ['id_servicio' => $id_servicio, 'semana' => $semana]) }}" method="post">
         @csrf
         <div class="row">

@@ -24,8 +24,10 @@ class CustomAuthController extends Controller{
         ->where('email', '=', $data['email'])
         ->first();
 
-        if($usuario->status == 0){
-            return redirect("login")->withError('Usuario Deshabilitado');
+        if(!empty($usuario)){
+            if($usuario->status == 0){
+                return redirect("login")->withError('Usuario Deshabilitado');
+            }
         }
 
         $credentials = $request->only('email', 'password');
