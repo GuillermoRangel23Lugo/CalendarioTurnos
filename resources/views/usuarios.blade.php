@@ -33,6 +33,7 @@
                     <th scope="col">Documento</th>
                     <th scope="col">Fecha de Nacimiento</th>
                     <th scope="col">Nivel</th>
+                    <th scope="col">Color</th>
                     <th scope="col">Status</th>
                     <th scope="col">Acción</th>
                 </tr>
@@ -46,6 +47,7 @@
                         <td>{{ $data->documento}}</td>
                         <td>{{ date('d/m/Y', strtotime($data->fecha_nacimiento)) }}</td>
                         <td>{{ $data->nivel}}</td>
+                        <td><span style="background-color: {{ $data->color }}; padding: 3px; border-radius: 3px;">{{ $data->color }}</span></td>
                         <td>
                             @if ($data->status == 1)
                                 <span class="text-success">Habilitado</span>
@@ -67,6 +69,7 @@
                                 data-email="{{ $data->email }}"
                                 data-email="{{ $data->email }}"
                                 data-nivel="{{ $data->nivel }}"
+                                data-color="{{ $data->color }}"
                                 data-fecha_nacimiento="{{ date('d/m/Y', strtotime($data->fecha_nacimiento)) }}"
                                 data-url="{{ route('editar.usuario', $data->id) }}"
                                 data-toggle="tooltip" data-placement="top" title="Editar Usuario"><i class="fas fa-edit"></i></a>
@@ -123,6 +126,10 @@
                         <label>Clave</label>
                         <input type="password" name="password" required class="form-control">
                     </div>
+                    <div class="form-group">
+                        <label>Color</label>
+                        <input type="color" name="color" required class="form-control">
+                    </div>
                 </div>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
@@ -175,6 +182,10 @@
                     <div class="form-group">
                         <label>Clave</label>
                         <input type="password" name="password" id="password" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Color</label>
+                        <input type="color" name="color" id="color" required class="form-control">
                     </div>
                 </div>
                 <div class="modal-footer">
