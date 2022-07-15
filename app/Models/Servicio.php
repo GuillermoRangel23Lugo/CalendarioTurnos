@@ -19,6 +19,11 @@ class Servicio extends Model
         return $servicios;
     }
 
+    public function get_by_id($id){
+        $servicio = DB::table($this->table)->where('id', $id)->first();
+        return $servicio;
+    }
+
     public function crear($data){
         DB::table($this->table)->insert($data);
     }

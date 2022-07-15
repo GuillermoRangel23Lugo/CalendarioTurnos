@@ -1,28 +1,28 @@
 @include('header')
 <div class="container">
     <h4 class="mb-4">
-        Listado de Servicios
-        <button class="btn btn-sm btn-success float-right" data-toggle="modal" data-target="#registrar_servicio">Registrar Servicio</button>
+        Listado de Turnos ({{ $servicio->servicio }})
+        <button class="btn btn-sm btn-success float-right" data-toggle="modal" data-target="#registrar_turno">Registrar Turno</button>
     </h4>
     
-    @if ($errors->has('servicio'))
-        <p class="text-danger">{{ $errors->first('servicio') }}</p>
+    @if ($errors->has('turno'))
+        <p class="text-danger">{{ $errors->first('turno') }}</p>
     @endif
     <div class="table-responsive">
         <table class="table table-hover table-striped table-bordered datatable">
             <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Servicio</th>
+                    <th scope="col">Turno</th>
                     <th scope="col">Status</th>
                     <th scope="col">Acción</th>
                 </tr>
             </thead>
             <tbody>
-                @foreach($servicios as $data)
+                @foreach($turnos as $data)
                     <tr>
                         <td>1</td>
-                        <td>{{ $data->servicio }}</td>
+                        <td>{{ $data->turno }}</td>
                         <td>
                             @if ($data->status == 1)
                                 <span class="text-success">Habilitado</span>
@@ -32,17 +32,16 @@
                         </td>
                         <td>
                             @if ($data->status == 1)
-                                <a href="{{ route('deshabilitar.servicio', $data->id) }}" class="btn btn-sm btn-warning" data-toggle="tooltip" data-placement="top" title="Deshabilitar Servicio"><i class="fas fa-times"></i></a>
+                                <a href="{{ route('deshabilitar.turno', $data->id, $servicio->id) }}" class="btn btn-sm btn-warning" data-toggle="tooltip" data-placement="top" title="Deshabilitar Turno"><i class="fas fa-times"></i></a>
                             @else
-                                <a href="{{ route('habilitar.servicio', $data->id) }}" class="btn btn-sm btn-success" data-toggle="tooltip" data-placement="top" title="Habilitar Servicio"><i class="fas fa-check"></i></a>
+                                <a href="{{ route('habilitar.turno', $data->id, $servicio->id) }}" class="btn btn-sm btn-success" data-toggle="tooltip" data-placement="top" title="Habilitar Turno"><i class="fas fa-check"></i></a>
                             @endif
                             
-                            <a href="{{ route('turnos.servicio', $data->id) }}" class="btn btn-sm btn-success" data-toggle="tooltip" data-placement="top" title="Turnos"><i class="fas fa-clock"></i></a>
-                            <a href="#a" class="btn btn-sm btn-info editar_servicio"
-                                data-servicio="{{ $data->servicio }}"
-                                data-url="{{ route('editar.servicio', $data->id) }}"
-                                data-toggle="tooltip" data-placement="top" title="Editar Servicio"><i class="fas fa-edit"></i></a>
-                            <a href="{{ route('eliminar.servicio', $data->id) }}" class="btn btn-sm btn-danger" data-toggle="tooltip" data-placement="top" title="Elimimnar Servicio"><i class="fas fa-trash"></i></a>
+                            <a href="#a" class="btn btn-sm btn-info editar_turno"
+                                data-turno="{{ $data->turno }}"
+                                data-url="{{ route('editar.turno', $data->id, $servicio->id) }}"
+                                data-toggle="tooltip" data-placement="top" title="Editar Turno"><i class="fas fa-edit"></i></a>
+                            <a href="{{ route('eliminar.turno', $data->id) }}" class="btn btn-sm btn-danger" data-toggle="tooltip" data-placement="top" title="Elimimnar Turno"><i class="fas fa-trash"></i></a>
                         </td>
                     </tr>
                 @endforeach
@@ -51,21 +50,21 @@
     </div>
 </div>
 <!-- Modal -->
-<div class="modal fade" id="registrar_servicio" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="registrar_turno" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Registrar Servicio</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Registrar Turno</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="{{ route('crear.servicio') }}" method="post">
+            <form action="{{ route('crear.turno', $servicio->id) }}" method="post">
                 <div class="modal-body">
                     @csrf
                     <div class="form-group">
-                        <label>Servicio</label>
-                        <input type="text" name="servicio" required class="form-control">
+                        <label>Turno</label>
+                        <input type="text" name="turno" required class="form-control">
                     </div>
                 </div>
                 <div class="modal-footer">
@@ -76,21 +75,21 @@
         </div>
     </div>
 </div>
-<div class="modal fade" id="editar_servicio" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+<div class="modal fade" id="editar_turno" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Editar Servicio</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Editar Turno</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                   <span aria-hidden="true">&times;</span>
                 </button>
             </div>
-            <form action="" method="post" id="form_editar_servicio">
+            <form action="" method="post" id="form_editar_turno">
                 <div class="modal-body">
                     @csrf
                     <div class="form-group">
-                        <label>Servicio</label>
-                        <input type="text" name="servicio" id="servicio" required class="form-control">
+                        <label>Turno</label>
+                        <input type="text" name="turno" id="turno" required class="form-control">
                     </div>
                 </div>
                 <div class="modal-footer">

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Hash;
 use Session;
 use App\Models\User;
+use App\Models\Servicio;
 use App\Models\Turno;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
@@ -17,7 +18,7 @@ class TurnosController extends Controller
      *
      * @return void
      */
-    protected $turno;
+    protected $turno, $servicio;
 
     public function __construct()
     {
@@ -36,8 +37,10 @@ class TurnosController extends Controller
     public function index(Request $request, $id_servicio)
     {
         $this->turno = new Turno();
+        $this->servicio = new Servicio();
+        $servicio = $this->servicio->get_by_id($id_servicio);
         $turnos = $this->turno->get_by_id_servicio($id_servicio);
-        return view('turnos', ['turnos' => $turnos]);
+        return view('turnos', ['turnos' => $turnos, 'servicio' => $servicio]);
     }
     
     public function crearTurno(Request $request){
