@@ -18,6 +18,7 @@
                 var email = $(this).data('email');
                 var email = $(this).data('email');
                 var nivel = $(this).data('nivel');
+                var color = $(this).data('color');
                 var fecha_nacimiento = $(this).data('fecha_nacimiento');
                 var url = $(this).data('url');
 
@@ -27,6 +28,7 @@
                 $('#email').val(email);
                 $('#email').val(email);
                 $('#nivel').val(nivel);
+                $('#color').val(color);
                 $('#fecha_nacimiento').val(fecha_nacimiento);
                 $('#form_editar_usuario').attr('action', url);
 
