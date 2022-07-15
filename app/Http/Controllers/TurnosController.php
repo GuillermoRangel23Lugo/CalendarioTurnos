@@ -77,9 +77,13 @@ class TurnosController extends Controller
         return view('turnosView', ['servicios' => $servicios, 'user_data' => $this->user_data, 'servicio' => $servicio, 'id_servicio' => $id_servicio, 'turnos' => $turnos, 'semana' => $semana, 'dias_turnos' => $dias_turnos, 'dias_semana' => $dias_semana]);
     }
 
-    public function obtenerTurnos(Request $request, $id_servicio, $semana){
+    public function obtenerTurnos(Request $request, $id_servicio = 0, $semana = 0){
         $this->turno = new Turno();
         $data = $request->all();
+        if(!isset($data['turnos_seleccionados'])){
+            $message = 'Seleccione algun turno';
+            return redirect()->route("servicio.turnos.semana", ['id_servicio' => $id_servicio, 'semana' => $semana])->with('error', $message);
+        }
         $message = 'Turno obtenidos.';
         foreach($data['turnos_seleccionados'] as $turno){
             $turno_data = $this->turno->get_by_id($turno);
