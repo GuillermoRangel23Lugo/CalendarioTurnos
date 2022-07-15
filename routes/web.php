@@ -41,3 +41,4 @@ Route::post('crear-turno/{id_servicio}', 'App\Http\Controllers\TurnosController@
 Route::get('turnos', 'App\Http\Controllers\TurnosController@turnosView')->name('turnos');
 Route::get('turnos/{id_servicio}', 'App\Http\Controllers\TurnosController@turnosView')->name('servicio.turnos');
 Route::get('turnos/{id_servicio}/{semana}', 'App\Http\Controllers\TurnosController@turnosView')->name('servicio.turnos.semana');
+Route::post('obtener-turnos/{id_servicio}/{semana}', 'App\Http\Controllers\TurnosController@obtenerTurnos')->name('obtener.turnos');

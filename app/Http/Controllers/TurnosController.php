@@ -70,6 +70,16 @@ class TurnosController extends Controller
 
         return view('turnosView', ['servicios' => $servicios, 'user_data' => $this->user_data, 'servicio' => $servicio, 'turnos' => $turnos, 'semana' => $semana, 'dias_turnos' => $dias_turnos, 'dias_semana' => $dias_semana]);
     }
+
+    public function obtenerTurnos(Request $request, $id_servicio, $semana){
+        $data = $request->all();
+        foreach($data['turnos_seleccionados'] as $turno){
+            $this->turno->actualizar([
+                'id_usuario' => Auth::user()->id,
+            ], $turno->id);
+        }
+        return redirect()->route("turnos.servicio", ['id_servicio' => $id_servicio, 'semana' => $semana])->with('message', 'Turno obtenidos.');
+    }
     
     public function crearTurno(Request $request, $id_servicio){
         $this->turno = new Turno();

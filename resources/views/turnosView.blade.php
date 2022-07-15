@@ -36,45 +36,64 @@
     @endif
     <h5>Turnos: </h5>
     <br>
-    <div class="row">
-        @foreach($dias_turnos as $key => $value)
-            <div class="col-md-4">
-                <table class="table table-bordered">
-                    <tr class="text-center">
-                        <td colspan="2"><b>{{ $dias_semana[date('w', strtotime(strtotime($key)))].' '.date('d/m/Y', strtotime($key)) }}</b></td>
-                    </tr>
-                    @if(!empty($value))
-                        @php
-                            $count = 0;
-                        @endphp
-                        @foreach($value as $turno)
-                            <tr>
-                                <td>{{ $turno->hora }}</td>
-                                <td>
-                                    <span style="
-                                    background-color: {{ $turno->color  }};
-                                    width: 20px;
-                                    height: 20px;
-                                    border-radius: 3px;
-                                    display: inline-block;
-                                    vertical-align: sub;
-                                    margin-right: 5px;"></span>
-                                    {{ $turno->nombre.' '.$turno->apellido  }}
-                                </td>
-                            </tr>
+    <form action="{{ route('obtener.turnos', ['id_servicio' => $servicio->id, 'semana' => $i]) }}" method="post">
+        @csrf
+        <div class="row">
+            @foreach($dias_turnos as $key => $value)
+                <div class="col-md-4">
+                    <table class="table table-bordered">
+                        <tr class="text-center">
+                            <td colspan="2"><b>{{ $dias_semana[date('w', strtotime(strtotime($key)))].' '.date('d/m/Y', strtotime($key)) }}</b></td>
+                        </tr>
+                        @if(!empty($value))
                             @php
-                                $count++;
+                                $count = 0;
                             @endphp
-                        @endforeach
-                        @if($count == 0)
-                            <tr>
-                                <td colspan="2">No hay turnos para este dia</td>
-                            </tr>
+                            @foreach($value as $turno)
+                                <tr>
+                                    <td>{{ $turno->hora }}</td>
+                                    <td>
+                                        @if(empty($turno->nombre))
+                                            <div class="form-check">
+                                                <input class="form-check-input" type="checkbox" id="turno{{ $turno->id }}" name="turnos_seleccionados[]" value="{{ $turno->id }}">
+                                                <label class="form-check-label" for="turno{{ $turno->id }}">
+                                                    Seleccionar este turno
+                                                </label>
+                                            </div>
+                                        @else
+                                            <span style="
+                                            background-color: {{ $turno->color  }};
+                                            width: 20px;
+                                            height: 20px;
+                                            border-radius: 3px;
+                                            display: inline-block;
+                                            vertical-align: sub;
+                                            margin-right: 5px;"></span>
+                                            {{ $turno->nombre.' '.$turno->apellido  }}
+                                        @endif
+                                    </td>
+                                </tr>
+                                @php
+                                    $count++;
+                                @endphp
+                            @endforeach
+                            @if($count == 0)
+                                <tr>
+                                    <td colspan="2">No hay turnos para este dia</td>
+                                </tr>
+                            @endif
                         @endif
-                    @endif
-                </table>
+                    </table>
+                </div>
+            @endforeach
+        </div>
+        <br><br>
+        <div class="row">
+            <div class="col-12 text-center">
+                <button class="btn btn-success" type="submit">Obtener Turnos</button>
             </div>
-        @endforeach
-    </div>
+        </div>
+        <br><br><br>
+    </form>
 </div>
 @include('footer')
