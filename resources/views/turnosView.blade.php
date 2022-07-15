@@ -10,7 +10,7 @@
         </button>
         <div class="dropdown-menu">
             @foreach($servicios as $servicio_data)
-                <a class="dropdown-item" href="{{ route('servicio.turnos.semana', ['id_servicio' => $id_servicio, 'semana' => date('W')]) }}">{{ $servicio_data->servicio }}</a>
+                <a class="dropdown-item" href="{{ route('servicio.turnos.semana', ['id_servicio' => $servicio_data->id, 'semana' => date('W')]) }}">{{ $servicio_data->servicio }}</a>
             @endforeach
         </div>
     </div>
