@@ -8,7 +8,9 @@
             $('.datatable').DataTable({
                 responsive: true
             });
-            $('.datepicker').datepicker({});
+            $('.datepicker').datepicker({
+                format: "dd/mm/yyyy",
+            });
             $('html').on('click', '.editar_usuario', function(evt){
                 var nombre = $(this).data('nombre');
                 var apellido = $(this).data('apellido');
@@ -38,6 +40,19 @@
                 $('#form_editar_servicio').attr('action', url);
 
                 $('#editar_servicio').modal('show');
+            });
+            $('html').on('click', '.editar_turno', function(evt){
+                var hora = $(this).data('hora');
+                var fecha = $(this).data('fecha');
+                var id_usuario = $(this).data('id_usuario');
+                var url = $(this).data('url');
+
+                $('#hora').val(hora);
+                $('#fecha').val(fecha);
+                $('#id_usuario').val(id_usuario);
+                $('#form_editar_turno').attr('action', url);
+
+                $('#editar_turno').modal('show');
             });
         } );
     </script>

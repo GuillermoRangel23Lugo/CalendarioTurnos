@@ -40,57 +40,49 @@ class TurnosController extends Controller
         $this->servicio = new Servicio();
         $servicio = $this->servicio->get_by_id($id_servicio);
         $turnos = $this->turno->get_by_id_servicio($id_servicio);
-        return view('turnos', ['turnos' => $turnos, 'servicio' => $servicio]);
+        $usuarios = DB::table('users')->where('status', 1)->get();
+        return view('turnos', ['turnos' => $turnos, 'servicio' => $servicio, 'usuarios' => $usuarios]);
     }
     
-    public function crearTurno(Request $request){
+    public function crearTurno(Request $request, $id_servicio){
         $this->turno = new Turno();
         $request->validate([
-            'turno' => 'required',
+            'hora' => 'required',
+            'id_usuario' => 'required',
+            'fecha' => 'required',
         ]);
            
         $data = $request->all();
         $this->turno->crear([
-            'turno' => $data['turno'],
+            'hora' => $data['hora'],
+            'id_usuario' => $data['id_usuario'],
+            'fecha' => date('Y-m-d', strtotime(str_replace('/', '-', $data['fecha']))),
+            'id_servicio' => $id_servicio,
             'status' => 1,
         ]);
-        return redirect("turnos")->with('message', 'Turno registrado.');
+        return redirect()->route("turnos.servicio", $id_servicio)->with('message', 'Turno registrado.');
     }
     
-    public function habilitarTurno(Request $request, $id){
-        $this->turno = new Turno();
-        $this->turno->actualizar([
-            'status' => 1,
-        ], $id);
-        
-        return redirect("turnos")->with('message', 'Turno habilitado.');
-    }
-    
-    public function deshabilitarTurno(Request $request, $id){
-        $this->turno = new Turno();
-        $this->turno->actualizar([
-            'status' => 0,
-        ], $id);
-
-        return redirect("turnos")->with('message', 'Turno deshabilitado.');
-    }
-    
-    public function editarTurno(Request $request, $id){
+    public function editarTurno(Request $request, $id, $id_servicio){
         $this->turno = new Turno();
         $request->validate([
-            'turno' => 'required',
+            'hora' => 'required',
+            'id_usuario' => 'required',
+            'fecha' => 'required',
         ]);
            
         $data = $request->all();
         $this->turno->actualizar([
-            'turno' => $data['turno'],
+            'hora' => $data['hora'],
+            'id_usuario' => $data['id_usuario'],
+            'fecha' => date('Y-m-d', strtotime(str_replace('/', '-', $data['fecha']))),
         ], $id);
-        return redirect("turnos")->with('message', 'Turno editado.');
+        return redirect()->route("turnos.servicio", $id_servicio)->with('message', 'Turno editado.');
     }
 
-    public function eliminarTurno(Request $request, $id){
+    public function eliminarTurno(Request $request, $id, $id_servicio){
         $this->turno = new Turno();
         $this->turno->eliminar($id);
-        return redirect("turnos")->with('message', 'Turno eliminado.');
+        return redirect()->route("turnos.servicio", $id_servicio)->with('message', 'Turno eliminado.');
     }
 }

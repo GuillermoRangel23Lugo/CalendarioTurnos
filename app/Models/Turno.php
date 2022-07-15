@@ -15,17 +15,24 @@ class Turno extends Model
     protected $table = 'turnos';
 
     public function get_all(){
-        $turnos = DB::table($this->table)->get();
+        $turnos = DB::table($this->table)
+        ->select('turnos.*','users.nombre','users.apellido','users.documento')
+        ->leftJoin('users', 'users.id', '=', 'turnos.id_usuario')->get();
         return $turnos;
     }
 
     public function get_by_id_servicio($id_servicio){
-        $turnos = DB::table($this->table)->where('id_servicio', $id_servicio)->get();
+        $turnos = DB::table($this->table)
+        ->select('turnos.*','users.nombre','users.apellido','users.documento')
+        ->leftJoin('users', 'users.id', '=', 'turnos.id_usuario')
+        ->where('id_servicio', $id_servicio)->get();
         return $turnos;
     }
 
     public function get_by_id_day($fecha){
-        $turnos = DB::table($this->table)->where('fecha', $fecha)->get();
+        $turnos = DB::table($this->table)
+        ->select('turnos.*','users.nombre','users.apellido','users.documento')
+        ->leftJoin('users', 'users.id', '=', 'turnos.id_usuario')->where('fecha', $fecha)->get();
         return $turnos;
     }
 

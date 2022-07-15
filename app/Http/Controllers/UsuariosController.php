@@ -49,7 +49,7 @@ class UsuariosController extends Controller
                 'nombre' => $data['nombre'],
                 'apellido' => $data['apellido'],
                 'documento' => $data['documento'],
-                'fecha_nacimiento' => date('Y-m-d', strtotime($data['fecha_nacimiento'])),
+                'fecha_nacimiento' => date('Y-m-d', strtotime(str_replace('/', '-', $data['fecha']))),
                 'nivel' => $data['nivel'],
                 'email' => $data['email'],
                 'password' => Hash::make($data['password'])
@@ -60,7 +60,7 @@ class UsuariosController extends Controller
                 'nombre' => $data['nombre'],
                 'apellido' => $data['apellido'],
                 'documento' => $data['documento'],
-                'fecha_nacimiento' => date('Y-m-d', strtotime($data['fecha_nacimiento'])),
+                'fecha_nacimiento' => date('Y-m-d', strtotime(str_replace('/', '-', $data['fecha']))),
                 'nivel' => $data['nivel'],
                 'email' => $data['email'],
             ];
