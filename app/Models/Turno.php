@@ -20,6 +20,11 @@ class Turno extends Model
         ->leftJoin('users', 'users.id', '=', 'turnos.id_usuario')->get();
         return $turnos;
     }
+    
+    public function get_by_id($id){
+        $turno = DB::table($this->table)->where('id', $id)->first();
+        return $turno;
+    }
 
     public function get_by_id_servicio($id_servicio){
         $turnos = DB::table($this->table)

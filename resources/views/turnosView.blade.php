@@ -36,7 +36,7 @@
     @endif
     <h5>Turnos: </h5>
     <br>
-    <form action="{{ route('obtener.turnos', ['id_servicio' => $servicio->id, 'semana' => $i]) }}" method="post">
+    <form action="{{ route('obtener.turnos', ['id_servicio' => $id_servicio, 'semana' => $semana]) }}" method="post">
         @csrf
         <div class="row">
             @foreach($dias_turnos as $key => $value)
