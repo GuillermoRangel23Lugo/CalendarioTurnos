@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Jul 15, 2022 at 07:04 PM
+-- Generation Time: Jul 15, 2022 at 07:12 PM
 -- Server version: 10.4.21-MariaDB
 -- PHP Version: 8.0.12
 
@@ -101,14 +101,6 @@ CREATE TABLE `servicios` (
   `status` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
---
--- Dumping data for table `servicios`
---
-
-INSERT INTO `servicios` (`id`, `servicio`, `status`) VALUES
-(2, 'Servicio 1', 1),
-(3, 'Servicio 2', 1);
-
 -- --------------------------------------------------------
 
 --
@@ -123,17 +115,6 @@ CREATE TABLE `turnos` (
   `fecha` datetime NOT NULL,
   `status` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `turnos`
---
-
-INSERT INTO `turnos` (`id`, `id_servicio`, `id_usuario`, `hora`, `fecha`, `status`) VALUES
-(1, 2, 1, '09:00-10:00', '2022-07-15 00:00:00', 1),
-(2, 2, 1, '10:00-11:00', '2022-07-15 00:00:00', 1),
-(3, 2, 4, '11:00-12:00', '2022-07-15 00:00:00', 1),
-(4, 2, 1, '12:00-13:00', '2022-07-15 00:00:00', 1),
-(5, 2, 1, '13:00-14:00', '2022-07-15 00:00:00', 1);
 
 -- --------------------------------------------------------
 
@@ -166,35 +147,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `nombre`, `email`, `email_verified_at`, `password`, `remember_token`, `created_at`, `updated_at`, `nivel`, `apellido`, `correo`, `clave`, `documento`, `status`, `fecha_nacimiento`, `name`, `color`) VALUES
-(1, 'Jose', 'josegr2402@gmail.com', NULL, '$2y$10$mDchD.XTAYIOsvCG4mWAkOg4UDZs1LVcJZg1m6l4AFIVH7LXZa/5m', NULL, '2022-07-14 07:58:15', '2022-07-14 07:58:15', 'Ingeniero', 'Gomez', NULL, NULL, '24106980', 1, '1970-01-01 00:00:00', 'Jose', '#e11919'),
-(3, 'Jose', 'josegggr2402@gmail.com', NULL, '$2y$10$NaTDVzJ4JMzC64WOmk3nQOwtQHNexRrOG/Jo/34wjqCZW9T/aoS0a', NULL, '2022-07-14 14:18:44', '2022-07-14 14:18:44', 'Administrador', 'Gomez', NULL, NULL, '24106980', 1, '1970-01-01 00:00:00', NULL, '#2442bc'),
-(4, 'asd', 'asd@gmail.com', NULL, '$2y$10$yc/tO6Ov0pi9eaHbKuBDBuhSIfBdcXQ.LkWWy4c7AXKI7x98c1z1O', NULL, '2022-07-14 14:21:46', '2022-07-14 14:21:46', 'Administrador', 'asd', NULL, NULL, 'asd', 1, '1970-01-01 00:00:00', NULL, '#69e218');
-
--- --------------------------------------------------------
-
---
--- Table structure for table `usuarios`
---
-
-CREATE TABLE `usuarios` (
-  `id` int(11) NOT NULL,
-  `nombre` varchar(40) NOT NULL,
-  `apellido` varchar(40) NOT NULL,
-  `correo` varchar(100) NOT NULL,
-  `clave` varchar(20) NOT NULL,
-  `password` varchar(255) NOT NULL,
-  `documento` varchar(20) NOT NULL,
-  `status` int(1) NOT NULL,
-  `fecha_nacimiento` datetime NOT NULL,
-  `nivel` varchar(30) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `usuarios`
---
-
-INSERT INTO `usuarios` (`id`, `nombre`, `apellido`, `correo`, `clave`, `password`, `documento`, `status`, `fecha_nacimiento`, `nivel`) VALUES
-(1, 'Jose', 'Gomez', 'josegr2402@gmail.com', 'Clave.123', '', '24106980', 1, '2022-07-01 14:49:54', 'Administrador');
+(1, 'Nombre', 'testcalendar@gmail.com', NULL, '$2y$10$RafTxxZpkNxyN0LnIXdaCuVjWYt78jaWjJ2ObPW8pfOKSkUwEsaC.', NULL, '2022-07-14 07:58:15', '2022-07-14 07:58:15', 'Administrador', 'Apellido', NULL, NULL, '111111', 1, '1970-01-01 00:00:00', 'name', '#e11919');
 
 --
 -- Indexes for dumped tables
@@ -247,12 +200,6 @@ ALTER TABLE `users`
   ADD UNIQUE KEY `users_email_unique` (`email`);
 
 --
--- Indexes for table `usuarios`
---
-ALTER TABLE `usuarios`
-  ADD PRIMARY KEY (`id`);
-
---
 -- AUTO_INCREMENT for dumped tables
 --
 
@@ -291,12 +238,6 @@ ALTER TABLE `turnos`
 --
 ALTER TABLE `users`
   MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT for table `usuarios`
---
-ALTER TABLE `usuarios`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
