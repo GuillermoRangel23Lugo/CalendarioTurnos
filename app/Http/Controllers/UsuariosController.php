@@ -19,10 +19,6 @@ class UsuariosController extends Controller
     public function __construct()
     {
         $this->middleware('auth');
-        if(!Auth::check()){
-            return redirect("login")->with('message', 'You are not allowed to access');
-        }
-  
     }
 
     /**
@@ -48,15 +44,28 @@ class UsuariosController extends Controller
         ]);
            
         $data = $request->all();
-        User::create([
-            'nombre' => $data['nombre'],
-            'apellido' => $data['apellido'],
-            'documento' => $data['documento'],
-            'fecha_nacimiento' => date('Y-m-d', strtotime($data['fecha_nacimiento'])),
-            'nivel' => $data['nivel'],
-            'email' => $data['email'],
-            'password' => Hash::make($data['password'])
-        ]);
+        if(isset($data['password']) && !empty($data['password'])){
+            $data_create = [
+                'nombre' => $data['nombre'],
+                'apellido' => $data['apellido'],
+                'documento' => $data['documento'],
+                'fecha_nacimiento' => date('Y-m-d', strtotime($data['fecha_nacimiento'])),
+                'nivel' => $data['nivel'],
+                'email' => $data['email'],
+                'password' => Hash::make($data['password'])
+            ];
+        }
+        else{
+            $data_create = [
+                'nombre' => $data['nombre'],
+                'apellido' => $data['apellido'],
+                'documento' => $data['documento'],
+                'fecha_nacimiento' => date('Y-m-d', strtotime($data['fecha_nacimiento'])),
+                'nivel' => $data['nivel'],
+                'email' => $data['email'],
+            ];
+        }
+        User::create();
         return redirect("usuarios")->with('message', 'Usuario registrado.');
     }
     

@@ -22,3 +22,19 @@ Route::get('eliminar-usuario/{id}', 'App\Http\Controllers\UsuariosController@eli
 Route::post('editar-usuario/{id}', 'App\Http\Controllers\UsuariosController@editarUsuario')->name('editar.usuario');
 Route::post('crear-usuario', 'App\Http\Controllers\UsuariosController@crearUsuario')->name('crear.usuario');
 Route::get('calendario', 'App\Http\Controllers\CalendarioController@index')->name('calendario');
+
+
+Route::get('servicios', 'App\Http\Controllers\ServiciosController@index')->name('servicios');
+Route::get('habilitar-servicio/{id}', 'App\Http\Controllers\ServiciosController@habilitarServicio')->name('habilitar.servicio');
+Route::get('deshabilitar-servicio/{id}', 'App\Http\Controllers\ServiciosController@deshabilitarServicio')->name('deshabilitar.servicio');
+Route::get('eliminar-servicio/{id}', 'App\Http\Controllers\ServiciosController@eliminarServicio')->name('eliminar.servicio');
+Route::post('editar-servicio/{id}', 'App\Http\Controllers\ServiciosController@editarServicio')->name('editar.servicio');
+Route::post('crear-servicio', 'App\Http\Controllers\ServiciosController@crearServicio')->name('crear.servicio');
+
+
+Route::get('servicio/{id}/turnos', 'App\Http\Controllers\TurnosController@index')->name('turnos.servicio');
+Route::get('habilitar-turno/{id}/{id_servicio}', 'App\Http\Controllers\TurnosController@habilitarTurno')->name('habilitar.turno');
+Route::get('deshabilitar-turno/{id}/{id_servicio}', 'App\Http\Controllers\TurnosController@deshabilitarTurno')->name('deshabilitar.turno');
+Route::get('eliminar-turno/{id}/{id_servicio}', 'App\Http\Controllers\TurnosController@eliminarTurno')->name('eliminar.turno');
+Route::post('editar-turno/{id}/{id_servicio}', 'App\Http\Controllers\TurnosController@editarTurno')->name('editar.turno');
+Route::post('crear-turno/{id_servicio}', 'App\Http\Controllers\TurnosController@crearTurno')->name('crear.turno');

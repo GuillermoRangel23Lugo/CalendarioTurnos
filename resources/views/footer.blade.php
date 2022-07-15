@@ -30,6 +30,15 @@
 
                 $('#editar_usuario').modal('show');
             });
+            $('html').on('click', '.editar_servicio', function(evt){
+                var servicio = $(this).data('servicio');
+                var url = $(this).data('url');
+
+                $('#servicio').val(servicio);
+                $('#form_editar_servicio').attr('action', url);
+
+                $('#editar_servicio').modal('show');
+            });
         } );
     </script>
 </body>
