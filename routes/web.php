@@ -33,8 +33,11 @@ Route::post('crear-servicio', 'App\Http\Controllers\ServiciosController@crearSer
 
 
 Route::get('servicio/{id}/turnos', 'App\Http\Controllers\TurnosController@index')->name('turnos.servicio');
-Route::get('habilitar-turno/{id}/{id_servicio}', 'App\Http\Controllers\TurnosController@habilitarTurno')->name('habilitar.turno');
-Route::get('deshabilitar-turno/{id}/{id_servicio}', 'App\Http\Controllers\TurnosController@deshabilitarTurno')->name('deshabilitar.turno');
 Route::get('eliminar-turno/{id}/{id_servicio}', 'App\Http\Controllers\TurnosController@eliminarTurno')->name('eliminar.turno');
 Route::post('editar-turno/{id}/{id_servicio}', 'App\Http\Controllers\TurnosController@editarTurno')->name('editar.turno');
 Route::post('crear-turno/{id_servicio}', 'App\Http\Controllers\TurnosController@crearTurno')->name('crear.turno');
+
+
+Route::get('turnos', 'App\Http\Controllers\TurnosController@turnosView')->name('turnos');
+Route::get('turnos/{id_servicio}', 'App\Http\Controllers\TurnosController@turnosView')->name('servicio.turnos');
+Route::get('turnos/{id_servicio}/{semana}', 'App\Http\Controllers\TurnosController@turnosView')->name('servicio.turnos.semana');
