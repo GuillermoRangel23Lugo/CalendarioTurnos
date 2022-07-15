@@ -25,7 +25,7 @@
                         <td>1</td>
                         <td>{{ date('d/m/Y', strtotime($data->fecha)) }}</td>
                         <td>{{ $data->hora }}</td>
-                        <td>{{ $data->nombre.' '.$data->apellido  }}</td>
+                        <td><span style="background-color: {{ $data->color  }}; width: 20px; height: 20px; border-radius: 3px; display: inline-block; vertical-align: sub; margin-right: 5px;"></span>{{ $data->nombre.' '.$data->apellido  }}</td>
                         <td>
                             <a href="#a" class="btn btn-sm btn-info editar_turno"
                                 data-fecha="{{ date('d/m/Y', strtotime($data->fecha)) }}"

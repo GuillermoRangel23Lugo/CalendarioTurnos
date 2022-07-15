@@ -22,9 +22,12 @@
             <div class="collapse navbar-collapse" id="navbarText">
                 <ul class="navbar-nav ml-auto">
                     <li class="nav-item active">
-                        <a class="nav-link" href="{{ route('servicios') }}">Servicios <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="{{ route('turnos') }}">Turnos <span class="sr-only">(current)</span></a>
                     </li>
-                    <li class="nav-item active">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ route('servicios') }}">Servicios</a>
+                    </li>
+                    <li class="nav-item">
                         <a class="nav-link" href="{{ route('usuarios') }}">Usuarios</a>
                     </li>
                     <li class="nav-item">

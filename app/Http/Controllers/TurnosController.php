@@ -18,7 +18,7 @@ class TurnosController extends Controller
      *
      * @return void
      */
-    protected $turno, $servicio;
+    protected $turno, $servicio, $user_data;
 
     public function __construct()
     {
@@ -26,7 +26,6 @@ class TurnosController extends Controller
         if(!Auth::check()){
             return redirect("login")->with('message', 'You are not allowed to access');
         }
-  
     }
 
     /**
@@ -42,6 +41,34 @@ class TurnosController extends Controller
         $turnos = $this->turno->get_by_id_servicio($id_servicio);
         $usuarios = DB::table('users')->where('status', 1)->get();
         return view('turnos', ['turnos' => $turnos, 'servicio' => $servicio, 'usuarios' => $usuarios]);
+    }
+
+    public function turnosView(Request $request, $id_servicio = 0, $semana = 0){
+        $id = Auth::user()->id;
+        $this->user_data = DB::table('users')->where('id', $id)->first();
+        
+        $this->turno = new Turno();
+        $this->servicio = new Servicio();
+        $servicios = $this->servicio->get_all_hab();
+        $servicio = [];
+        $turnos = [];
+        if($id_servicio != 0){
+            $servicio = $this->servicio->get_by_id($id_servicio);
+            $turnos = $this->turno->get_by_id_servicio($id_servicio);
+        }
+
+        $dias_turnos = [];
+        if($id_servicio != 0 && $semana != 0){
+            $dias = (($semana-1)*7)+1;
+            for($i = 1; $i <= 7; $i++){
+                $dia = date('Y-m-d', strtotime(date('Y').'-01-01 00:00:00 +'.($dias+$i).' days'));
+                $dias_turnos[$dia] = $this->turno->get_by_id_servicio_and_fecha($id_servicio, $dia);
+            }
+        }
+
+        $dias_semana = [0 => 'Domingo', 1 => 'Lunes', 2 => 'Martes', 3 => 'Miercoles', 4 => 'Jueves', 5 => 'Viernes', 6 => 'Sabado'];
+
+        return view('turnosView', ['servicios' => $servicios, 'user_data' => $this->user_data, 'servicio' => $servicio, 'turnos' => $turnos, 'semana' => $semana, 'dias_turnos' => $dias_turnos, 'dias_semana' => $dias_semana]);
     }
     
     public function crearTurno(Request $request, $id_servicio){
