@@ -31,9 +31,6 @@
                         <a class="nav-link" href="{{ route('usuarios') }}">Usuarios</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('calendario') }}">Calendario</a>
-                    </li>
-                    <li class="nav-item">
                         <a class="nav-link" href="{{ route('signout') }}">Cerrar Sesion</a>
                     </li>
                 </ul>
