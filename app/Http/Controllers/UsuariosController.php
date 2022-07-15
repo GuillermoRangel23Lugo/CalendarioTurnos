@@ -72,7 +72,7 @@ class UsuariosController extends Controller
                 'color' => $data['color'],
             ];
         }
-        User::create();
+        User::create($data_create);
         return redirect("usuarios")->with('message', 'Usuario registrado.');
     }
     
